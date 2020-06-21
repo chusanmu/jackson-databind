@@ -3,6 +3,7 @@ package com.fasterxml.jackson.databind;
 import com.fasterxml.jackson.databind.cfg.ConfigFeature;
 
 /**
+ * 对象的序列化特征开关
  * Enumeration that defines simple on/off features that affect
  * the way Java objects are serialized.
  *<p>
@@ -22,6 +23,7 @@ public enum SerializationFeature implements ConfigFeature
      */
 
     /**
+     * TODO: 是否使用根名称 root name 进行包裹
      * Feature that can be enabled to make root value (usually JSON
      * Object but can be any type) wrapped within a single property
      * JSON object, where key as the "root name", as determined by
@@ -35,6 +37,7 @@ public enum SerializationFeature implements ConfigFeature
     WRAP_ROOT_VALUE(false),
 
     /**
+     * TODO: 是否采用缩进输出
      * Feature that allows enabling (or disabling) indentation
      * for the underlying generator, using the default pretty
      * printer configured for {@link ObjectMapper} (and
@@ -55,6 +58,7 @@ public enum SerializationFeature implements ConfigFeature
      */
 
     /**
+     * 当没有访问器是，如何处理，true失败，false {}
      * Feature that determines what happens when no accessors are
      * found for a type (and there are no annotations to indicate
      * it is meant to be serialized). If enabled (default), an
@@ -72,6 +76,7 @@ public enum SerializationFeature implements ConfigFeature
     FAIL_ON_EMPTY_BEANS(true),
 
     /**
+     * TODO: 自我引用时是否抛错
      * Feature that determines what happens when a direct self-reference
      * is detected by a POJO (and no Object Id handling is enabled for it):
      * either a {@link JsonMappingException} is
@@ -84,6 +89,7 @@ public enum SerializationFeature implements ConfigFeature
     FAIL_ON_SELF_REFERENCES(true),
 
     /**
+     * 是否需要捕获异常然后重新抛出，建议开启
      * Feature that determines whether Jackson code should catch
      * and wrap {@link Exception}s (but never {@link Error}s!)
      * to add additional information about
@@ -122,6 +128,7 @@ public enum SerializationFeature implements ConfigFeature
      */
 
      /**
+      * 是否自动关闭流
       * Feature that determines whether <code>close</code> method of
       * serialized <b>root level</b> objects (ones for which <code>ObjectMapper</code>'s
       * writeValue() (or equivalent) method is called)
@@ -160,6 +167,7 @@ public enum SerializationFeature implements ConfigFeature
      */
 
     /**
+     * TODO: 把日期类型是否按照时间戳格式写出
      * Feature that determines whether Date (and date/time) values
      * (and Date-based things like {@link java.util.Calendar}s) are to be
      * serialized as numeric timestamps (true; the default),
@@ -235,6 +243,7 @@ public enum SerializationFeature implements ConfigFeature
     WRITE_DURATIONS_AS_TIMESTAMPS(true),
     
     /**
+     * TODO: 是否把char[]数组也当做数组序列化
      * Feature that determines how type <code>char[]</code> is serialized:
      * when enabled, will be serialized as an explict JSON array (with
      * single-character Strings as values); when disabled, defaults to
@@ -245,6 +254,7 @@ public enum SerializationFeature implements ConfigFeature
     WRITE_CHAR_ARRAYS_AS_JSON_ARRAYS(false),
 
     /**
+     * TODO: 序列化枚举是否使用toString()方法，默认是name()方法
      * Feature that determines standard serialization mechanism used for
      * Enum values: if enabled, return value of <code>Enum.toString()</code>
      * is used; if disabled, return value of <code>Enum.name()</code> is used.
@@ -386,6 +396,7 @@ public enum SerializationFeature implements ConfigFeature
     WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS(true),
 
     /**
+     * TODO: 是否根据map的key帮你排序，如果是SortedMap就不会再帮你排序了
      * Feature that determines whether {@link java.util.Map} entries are first
      * sorted by key before serialization or not: if enabled, additional sorting
      * step is performed if necessary (not necessary for {@link java.util.SortedMap}s),
@@ -402,6 +413,7 @@ public enum SerializationFeature implements ConfigFeature
      */
 
     /**
+     * 是否应用jackson的序列化缓存机制提升性能
      * Feature that determines whether {@link ObjectWriter} should
      * try to eagerly fetch necessary {@link JsonSerializer} when
      * possible. This improves performance in cases where similarly

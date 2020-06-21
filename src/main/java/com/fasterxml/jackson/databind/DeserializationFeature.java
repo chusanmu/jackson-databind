@@ -3,6 +3,7 @@ package com.fasterxml.jackson.databind;
 import com.fasterxml.jackson.databind.cfg.ConfigFeature;
 
 /**
+ * 对象的反序列化开关
  * Enumeration that defines simple on/off features that affect
  * the way Java objects are deserialized from JSON
  *<p>
@@ -26,6 +27,7 @@ public enum DeserializationFeature implements ConfigFeature
      */
 
     /**
+     * TODO: 是否把浮点数反序列化到BigDeciaml里面
      * Feature that determines whether JSON floating point numbers
      * are to be deserialized into {@link java.math.BigDecimal}s
      * if only generic type description (either {@link Object} or
@@ -48,6 +50,7 @@ public enum DeserializationFeature implements ConfigFeature
     USE_BIG_DECIMAL_FOR_FLOATS(false),
 
     /**
+     * 对整型的处理是否使用bigInteger
      * Feature that determines whether JSON integral (non-floating-point)
      * numbers are to be deserialized into {@link java.math.BigInteger}s
      * if only generic type description (either {@link Object} or
@@ -66,6 +69,7 @@ public enum DeserializationFeature implements ConfigFeature
     USE_BIG_INTEGER_FOR_INTS(false),
 
     /**
+     * 是否使用Long去装int值，很显然，也是在类型不明确时才有效
      * Feature that determines how "small" JSON integral (non-floating-point)
      * numbers -- ones that fit in 32-bit signed integer (`int`) -- are bound
      * when target type is loosely typed as {@link Object} or {@link Number}
@@ -89,6 +93,7 @@ public enum DeserializationFeature implements ConfigFeature
     USE_LONG_FOR_INTS(false),
     
     /**
+     * TODO: 是否使用Java的数组去装载JSON数组
      * Feature that determines whether JSON Array is mapped to
      * <code>Object[]</code> or {@code List<Object>} when binding
      * "untyped" objects (ones with nominal type of <code>java.lang.Object</code>).
@@ -106,6 +111,7 @@ public enum DeserializationFeature implements ConfigFeature
      */
 
     /**
+     * TODO: 反序列化遇到自己不认识的属性时是否抛错，这个特征在spring, spring boot里面都是关闭的
      * Feature that determines whether encountering of unknown
      * properties (ones that do not map to a property, and there is
      * no "any setter" or handler that can handle it)
@@ -122,6 +128,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_UNKNOWN_PROPERTIES(true),
 
     /**
+     * TODO: 对于Int/long这种基本类型，若传null的话是否失败，true,没传就抛出JsonProcessingException异常
      * Feature that determines whether encountering of JSON null
      * is an error when deserializing into Java primitive types
      * (like 'int' or 'double'). If it is, a JsonProcessingException
@@ -133,6 +140,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_NULL_FOR_PRIMITIVES(false),
 
     /**
+     * TODO: 反序列化到枚举类型是否允许传数字
      * Feature that determines whether JSON integer numbers are valid
      * values to be used for deserializing Java enum values.
      * If set to 'false' numbers are acceptable and are used to map to
@@ -147,6 +155,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_NUMBERS_FOR_ENUMS(false),
 
     /**
+     * TODO: 当传入的是非法的子类型的时候，是否失败
      * Feature that determines what happens when type of a polymorphic
      * value (indicated for example by {@link com.fasterxml.jackson.annotation.JsonTypeInfo})
      * cannot be found (missing) or resolved (invalid class name, unmappable id);
@@ -160,6 +169,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_INVALID_SUBTYPE(true),
 
     /**
+     * TODO: 读取为树模型的时候，遇上相同的key是否抛出异常
      * Feature that determines what happens when reading JSON content into tree
      * ({@link com.fasterxml.jackson.core.TreeNode}) and a duplicate key
      * is encountered (property name that was already seen for the JSON Object).
@@ -177,6 +187,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_READING_DUP_TREE_KEY(false),
 
     /**
+     * TODO: 如何处理已经被显示标记为忽略的属性
      * Feature that determines what happens when a property that has been explicitly
      * marked as ignorable is encountered in input: if feature is enabled,
      * {@link JsonMappingException} is thrown; if false, property is quietly skipped.
@@ -204,6 +215,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_UNRESOLVED_OBJECT_IDS(true),
 
     /**
+     * 当创建方法 有多个参数，但是有参数的缺失时是否失败
      * Feature that determines what happens if one or more Creator properties (properties
      * bound to parameters of Creator method (constructor or static factory method))
      * are missing value to bind to from content.
@@ -225,6 +237,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_MISSING_CREATOR_PROPERTIES(false),
 
     /**
+     * 给创建方法传null是否失败
       * Feature that determines what happens if one or more Creator properties (properties
       * bound to parameters of Creator method (constructor or static factory method))
       * are bound to null values - either from the JSON or as a default value. This
@@ -252,6 +265,7 @@ public enum DeserializationFeature implements ConfigFeature
     FAIL_ON_MISSING_EXTERNAL_TYPE_ID_PROPERTY(true),
 
     /**
+     * 是否去校验末尾的token
      * Feature that determines behaviour for data-binding after binding the root value.
      * If feature is enabled, one more call to
      * {@link com.fasterxml.jackson.core.JsonParser#nextToken} is made to ensure that
