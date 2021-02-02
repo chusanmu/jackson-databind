@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.util.ArrayBuilders;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 
 /**
+ * TODO: 用于序列化 Map.Entry<?,?> 类型
  * @since 2.5
  */
 @SuppressWarnings("serial")

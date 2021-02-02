@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 /**
+ * TODO: 它是序列化容器类型的基类，容器类型包括 Collection List Set Map 等等
  * Intermediate base class for serializers used for serializing
  * types that contain element(s) of other types, such as arrays,
  * {@link java.util.Collection}s (<code>Lists</code>, <code>Sets</code>

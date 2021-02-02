@@ -2206,6 +2206,7 @@ nonAnnotatedParamIndex, ctor);
     }
 
     /**
+     * TODO：添加一些反序列化器映射
      * Helper class to contain default mappings for abstract JDK {@link java.util.Collection}
      * and {@link java.util.Map} types. Separated out here to defer cost of creating lookups
      * until mappings are actually needed.

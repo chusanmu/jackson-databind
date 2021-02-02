@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 
 /**
+ * TODO: 它是在原JsonSerializer的基础上加上了类型信息TypeSerializer，属于一种包装模式的实现
  * Simple serializer that will call configured type serializer, passing
  * in configured data serializer, and exposing it all as a simple
  * serializer.

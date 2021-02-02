@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.introspect.AnnotatedWithParams;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 
 /**
+ * 反序列化到Collection<String 类型
  * Specifically optimized version for {@link java.util.Collection}s
  * that contain String values; reason is that this is a very common
  * type and we can make use of the fact that Strings are final.

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ser.ContainerSerializer;
 import com.fasterxml.jackson.databind.ser.impl.PropertySerializerMap;
 
 /**
+ * TODO: 用于序列化Collection类型的
  * Fallback serializer for cases where Collection is not known to be
  * of type for which more specializer serializer exists (such as
  * index-accessible List).

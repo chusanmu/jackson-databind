@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.util.AccessPattern;
 import com.fasterxml.jackson.databind.util.ArrayBuilders;
 
 /**
+ * TODO: 源生类型，如byte int short long类型的数组的反序列化器的基类
  * Container for deserializers used for instantiating "primitive arrays",
  * arrays that contain non-object java primitive types.
  */

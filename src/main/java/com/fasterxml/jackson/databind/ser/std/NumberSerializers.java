@@ -23,6 +23,10 @@ import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 public class NumberSerializers {
     protected NumberSerializers() { }
 
+    /**
+     * TODO: 数字类型的序列化器
+     * @param allDeserializers
+     */
     public static void addAll(Map<String, JsonSerializer<?>> allDeserializers) {
         allDeserializers.put(Integer.class.getName(), new IntegerSerializer(Integer.class));
         allDeserializers.put(Integer.TYPE.getName(), new IntegerSerializer(Integer.TYPE));

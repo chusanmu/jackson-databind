@@ -53,6 +53,7 @@ public abstract class JsonDeserializer<T>
      */
     
     /**
+     * TODO: 反序列化
      * Method that can be called to ask implementation to deserialize
      * JSON content into the value type this serializer handles.
      * Returned instance is to be constructed by method itself.

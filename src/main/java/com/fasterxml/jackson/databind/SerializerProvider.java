@@ -477,6 +477,10 @@ public abstract class SerializerProvider
      */
 
     /**
+     * TODO: 通用序列化程序定位功能
+     * 1. 获取给定类型值的序列化器
+     * 2. 如果找不到这样的序列化器，则使用默认的处理程序
+     * 3. 可以尽最大努力进行通用序列化，也可以简单的进调用时抛出异常
      * Method called to get hold of a serializer for a value of given type;
      * or if no such serializer can be found, a default handler (which
      * may do a best-effort generic serialization or just simply
@@ -498,6 +502,7 @@ public abstract class SerializerProvider
         throws JsonMappingException
     {
         // Fast lookup from local lookup thingy works?
+        // TODO: 二级缓存查找，和上面不同的是这里使用的是unType系列方法，也就是通用的和类型无关的序列化器缓存
         JsonSerializer<Object> ser = _knownSerializers.untypedValueSerializer(valueType);
         if (ser == null) {
             // If not, maybe shared map already has it?
@@ -507,8 +512,10 @@ public abstract class SerializerProvider
                 ser = _serializerCache.untypedValueSerializer(_config.constructType(valueType));
                 if (ser == null) {
                     // If neither, must create
+                    // TODO: 如果没有找到，那就必须得创建，例如 首次进来 valueType = Person.class, 所以肯定会执行创建
                     ser = _createAndCacheUntypedSerializer(valueType);
                     // Not found? Must use the unknown type serializer, which will report error later on
+                    // TODO: 如果还没有找到，那就使用UnknownSerializer来处理
                     if (ser == null) {
                         ser = getUnknownTypeSerializer(valueType);
                         // Should this be added to lookups?
@@ -680,6 +687,9 @@ public abstract class SerializerProvider
     }
     
     /**
+     * TODO: valueType:用于定义序列化器的类型(精确匹配)，可以来自静态类型或者动态类型
+     *      cache 是否应该被缓存
+     *      property: 在创建辅助序列化器时，为其创建的属性需要序列化器属性 可以为null
      * Method called to locate regular serializer, matching type serializer,
      * and if both found, wrap them in a serializer that calls both in correct
      * sequence. This method is currently only used for root-level serializer
@@ -699,22 +709,28 @@ public abstract class SerializerProvider
         throws JsonMappingException
     {
         // Two-phase lookups; local non-shared cache, then shared:
+        // TODO: =========== 二级缓存 start=========
         JsonSerializer<Object> ser = _knownSerializers.typedValueSerializer(valueType);
         if (ser != null) {
             return ser;
         }
         // If not, maybe shared map already has it?
+        // TODO: 若没有找到，看看共享序列化器里有没有。_serializerCache缓存着共享类型的序列号器们
         ser = _serializerCache.typedValueSerializer(valueType);
         if (ser != null) {
             return ser;
         }
+        // TODO: =========== 二级缓存 end=============
 
         // Well, let's just compose from pieces:
+        // TODO: 寻找序列化器，这个方法又是特别重要的
         ser = findValueSerializer(valueType, property);
+        // TODO: 1. 若有需要根据给定的类型创建带类型信息的序列化器 2. 若不需要就返回null
         TypeSerializer typeSer = _serializerFactory.createTypeSerializer(_config,
                 _config.constructType(valueType));
         if (typeSer != null) {
             typeSer = typeSer.forProperty(property);
+            // TODO: 使用typeWrappedSerializer代理包装一层，它的特点就是带有类型信息
             ser = new TypeWrappedSerializer(typeSer, ser);
         }
         if (cache) {
@@ -1000,6 +1016,7 @@ public abstract class SerializerProvider
         throws JsonMappingException
     {
         if (ser != null) {
+            // TODO: 序列化器如果实现了这个接口，进行进一步增强，有点拦截器的味道
             if (ser instanceof ContextualSerializer) {
                 ser = ((ContextualSerializer) ser).createContextual(this, property);
             }

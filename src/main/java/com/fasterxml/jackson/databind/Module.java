@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.type.TypeModifier;
 import java.util.Collections;
 
 /**
+ * TODO:
  * Simple interface for extensions that can be registered with {@link ObjectMapper}
  * to provide a well-defined set of extensions to default functionality; such as
  * support for new data types.
@@ -32,6 +33,7 @@ public abstract class Module
      */
     
     /**
+     * TODO: 模块名称
      * Method that returns a display that can be used by Jackson
      * for informational purposes, as well as in associating extensions with
      * module that provides them.
@@ -46,6 +48,7 @@ public abstract class Module
     public abstract Version version();
 
     /**
+     * TODO: 模块ID，默认值当前实例的全类名
      * Method that returns an id that may be used to determine if two {@link Module}
      * instances are considered to be of same type, for purpose of preventing
      * multiple registrations of "same type of" module
@@ -69,6 +72,7 @@ public abstract class Module
      */
     
     /**
+     * TODO: 此方法由ObjectMapper调用，调用它是为了让模块注册它提供的功能，使用传入的上下文对象公开的回调方法
      * Method called by {@link ObjectMapper} when module is registered.
      * It is called to let module register functionality it provides,
      * using callback methods passed-in context object exposes.
@@ -76,6 +80,7 @@ public abstract class Module
     public abstract void setupModule(SetupContext context);
 
     /**
+     * TODO: 返回此模块拥有的从属模块列表，也就是所谓的依赖模块，模块一般是独立的，所以此方法一般都返回空
      * Returns the list of dependent modules this module has, if any.
      * It is called to let modules register other modules as dependencies.
      * Modules returned will be registered before this module is registered,

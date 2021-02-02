@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ser.std.BeanSerializerBase;
 import com.fasterxml.jackson.databind.util.NameTransformer;
 
 /**
+ * TODO: 默认不使用它，它默认输出Json数组格式，使用它 需要使用@JsonFormat(shape=JsonFormat.Shape.ARRAY)
  * Specialized POJO serializer that differs from
  * {@link com.fasterxml.jackson.databind.ser.BeanSerializer}
  * in that instead of producing a JSON Object it will output

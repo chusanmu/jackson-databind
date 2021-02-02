@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.util.ClassUtil;
 
 /**
+ * TODO: 它是一个特殊的序列化器，用于序列化标注有@JsonValue注解的对象
  * Serializer class that can serialize Object that have a
  * {@link com.fasterxml.jackson.annotation.JsonValue} annotation to
  * indicate that serialization should be done by calling the method

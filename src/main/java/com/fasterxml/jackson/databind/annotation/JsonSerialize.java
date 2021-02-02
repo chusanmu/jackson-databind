@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.util.Converter;
 
 /**
+ * TODO: 为某个类，field等指定专用的序列化器，反序列化器
  * Annotation used for configuring serialization aspects, by attaching
  * to "getter" methods or fields, or to value classes.
  * When annotating value classes, configuration is used for instances

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.util.AccessPattern;
 import com.fasterxml.jackson.databind.util.ClassUtil;
 
 /**
+ * TODO: 和容器类型相关的反序列化器基类
  * Intermediate base deserializer class that adds more shared accessor
  * so that other classes can access information about contained (value) types
  */

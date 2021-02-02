@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ser.ContainerSerializer;
 import com.fasterxml.jackson.databind.ser.std.AsArraySerializerBase;
 
 /**
+ * TODO: 用于序列化List类型的
  * This is an optimized serializer for Lists that can be efficiently
  * traversed by index (as opposed to others, such as {@link LinkedList}
  * that cannot}.

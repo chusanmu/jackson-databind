@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 /**
+ * TODO: 用于存储基础配置的不可变容器类，因为实例是不可变的，所以是线程安全的 并且 可以共享
  * Immutable container class used to store simple configuration
  * settings. Since instances are fully immutable, instances can
  * be freely shared and used without synchronization.
@@ -41,6 +42,7 @@ public final class BaseSettings
      */
     
     /**
+     * 负责class类的自省，得到元信息BeanDescription
      * Introspector used to figure out Bean properties needed for bean serialization
      * and deserialization. Overridable so that it is possible to change low-level
      * details of introspection, like adding new annotation types.
@@ -48,11 +50,13 @@ public final class BaseSettings
     protected final ClassIntrospector _classIntrospector;
 
     /**
+     * 处理注解
      * Introspector used for accessing annotation value based configuration.
      */
     protected final AnnotationIntrospector _annotationIntrospector;
 
     /**
+     * 属性名称生成策略
      * Custom property naming strategy in use, if any.
      */
     protected final PropertyNamingStrategy _propertyNamingStrategy;
@@ -91,6 +95,7 @@ public final class BaseSettings
      */
     
     /**
+     * TODO: 如果显示的配置了格式化模板，将替换掉Jackson自己的StdDateFormat
      * Custom date format to use for de-serialization. If specified, will be
      * used instead of {@link com.fasterxml.jackson.databind.util.StdDateFormat}.
      *<p>
@@ -100,6 +105,7 @@ public final class BaseSettings
     protected final DateFormat _dateFormat;
 
     /**
+     * TODO: 处理实例化器，负责序列化，反序列化，它是Jackson提供的一个扩展点，自己内部并没有提供任何实现，但是Spring提供了SpringHandlerInstantiator这个实现类
      * Object used for creating instances of handlers (serializers, deserializers,
      * type and type id resolvers), given class to instantiate. This is typically
      * used to do additional configuration (with dependency injection, for example)

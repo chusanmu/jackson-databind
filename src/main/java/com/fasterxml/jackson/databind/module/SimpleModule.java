@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 
 /**
+ * TODO:Module它是个抽象类不能直接使用，Jackson内置了一个简单实现，它提供了更加便捷的API供以使用，比直接操作SetupContext便捷很多
  * Vanilla {@link Module} implementation that allows registration
  * of serializers and deserializers, bean serializer
  * and deserializer modifiers, registration of subtypes and mix-ins
@@ -42,16 +43,24 @@ public class SimpleModule
 {
     private static final long serialVersionUID = 1L; // 2.5.0
 
+    /* ---------------- 模块名称和版本 -------------- */
+
     protected final String _name;
     protected final Version _version;
 
+    /* ---------------- 序列化器/反序列化器 -------------- */
+
+
     protected SimpleSerializers _serializers = null;
     protected SimpleDeserializers _deserializers = null;
+
+    /* ---------------- key的序列化器和反序列化器 -------------- */
 
     protected SimpleSerializers _keySerializers = null;
     protected SimpleKeyDeserializers _keyDeserializers = null;
 
     /**
+     * TODO: 用于存储映射的延迟构造的解析器
      * Lazily-constructed resolver used for storing mappings from
      * abstract classes to more specific implementing classes
      * (which may be abstract or concrete)
@@ -87,6 +96,7 @@ public class SimpleModule
     protected LinkedHashSet<NamedType> _subtypes = null;
 
     /**
+     * 名字生成策略
      * @since 2.3
      */
     protected PropertyNamingStrategy _namingStrategy = null;
@@ -98,6 +108,7 @@ public class SimpleModule
      */
 
     /**
+     * TODO: 默认构造器，生成name名称，如果是SimpleModule类型，那每次生成的名称都是不一样的，其他类型，比如子类，每次名称默认都是一样的，就是全类名嘛
      * Constructors that should only be used for non-reusable
      * convenience modules used by app code: "real" modules should
      * use actual name and version number information.
@@ -176,6 +187,7 @@ public class SimpleModule
     }
 
     /**
+     * SimpleModule类型返回null, 说明是可以被注册多次的，但是它的子类就不行，默认只有首次注册的时候回生效
      * Since instances are likely to be custom, implementation returns
      * <code>null</code> if (but only if!) this class is directly instantiated;
      * but class name (default impl) for sub-classes.

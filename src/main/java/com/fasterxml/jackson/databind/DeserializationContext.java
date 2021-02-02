@@ -470,17 +470,20 @@ public abstract class DeserializationContext
     }
     
     /**
+     * TODO: 根据反序列化对象的类型，找到一个合适的反序列化器
      * Method for finding a deserializer for root-level value.
      */
     @SuppressWarnings("unchecked")
     public final JsonDeserializer<Object> findRootValueDeserializer(JavaType type)
         throws JsonMappingException
     {
+        // TODO: 去上下文的缓存里查找出一个反序列化器，上下文里查不到，则会创建一个
         JsonDeserializer<Object> deser = _cache.findValueDeserializer(this,
                 _factory, type);
         if (deser == null) { // can this occur?
             return null;
         }
+        // TODO: 对实现了接口ContextualDeserializer做一个进一步的处理
         deser = (JsonDeserializer<Object>) handleSecondaryContextualization(deser, null, type);
         TypeDeserializer typeDeser = _factory.findTypeDeserializer(_config, type);
         if (typeDeser != null) {

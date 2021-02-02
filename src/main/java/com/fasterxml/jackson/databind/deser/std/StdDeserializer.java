@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.util.ClassUtil;
 import com.fasterxml.jackson.databind.util.Converter;
 
 /**
+ * TODO: 它即作为基类 同时也提供了 处理原生类型的基本功能 以及 解析字符串的能力
  * Base class for common deserializers. Contains shared
  * base functionality for dealing with primitive values, such
  * as (re)parsing from String.
@@ -483,6 +484,13 @@ public abstract class StdDeserializer<T>
         return _nonNullNumber(v).doubleValue();
     }
 
+    /**
+     * 简单的说，默认情况下，使用的getDateFormat().parse(dateStr)
+     * @param p
+     * @param ctxt
+     * @return
+     * @throws IOException
+     */
     protected java.util.Date _parseDate(JsonParser p, DeserializationContext ctxt)
         throws IOException
     {

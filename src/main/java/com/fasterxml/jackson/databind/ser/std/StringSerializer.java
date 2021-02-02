@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrappe
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 /**
+ * TODO: 只处理StringSerializer类型
  * This is the special serializer for regular {@link java.lang.String}s.
  *<p>
  * Since this is one of "native" types, no type information is ever

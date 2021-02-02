@@ -40,6 +40,9 @@ public abstract class MapperConfig<T extends MapperConfig<T>>
 {
     private static final long serialVersionUID = 2L; // since 2.9
 
+
+
+    /* ---------------- 从这里可以看出，@JsonInclude,和@JsonFormat俩注解是序列化，反序列化均会生效的 -------------- */
     /**
      * @since 2.7
      */
@@ -51,6 +54,7 @@ public abstract class MapperConfig<T extends MapperConfig<T>>
     protected final static JsonFormat.Value EMPTY_FORMAT = JsonFormat.Value.empty();
 
     /**
+     * 管理着所有的MapperFeature特征们
      * Set of shared mapper features enabled.
      */
     protected final int _mapperFeatures;
@@ -118,12 +122,14 @@ public abstract class MapperConfig<T extends MapperConfig<T>>
     public abstract T with(MapperFeature... features);
 
     /**
+     * 返回一个新实例，并且禁用这些特征
      * Method for constructing and returning a new instance with specified
      * mapper features disabled.
      */
     public abstract T without(MapperFeature... features);
 
     /**
+     * 返回一个新实例，并且开启这些特征
      * @since 2.3
      */
     public abstract T with(MapperFeature feature, boolean state);
@@ -153,6 +159,7 @@ public abstract class MapperConfig<T extends MapperConfig<T>>
     }
     
     /**
+     * TODO: 是否开启了注解支持
      * Method for determining whether annotation processing is enabled or not
      * (default settings are typically that it is enabled; must explicitly disable).
      * 
@@ -163,6 +170,7 @@ public abstract class MapperConfig<T extends MapperConfig<T>>
     }
 
     /**
+     * 访问器，用于确定是否可以尝试强制覆盖访问
      * Accessor for determining whether it is ok to try to force override of access
      * modifiers to be able to get or set values of non-public Methods, Fields;
      * to invoke non-public Constructors, Methods; or to instantiate non-public
@@ -178,6 +186,7 @@ public abstract class MapperConfig<T extends MapperConfig<T>>
     }
 
     /**
+     * 是否需要排序
      * Accessor for checking whether default settings for property handling
      * indicate that properties should be alphabetically ordered or not.
      */
@@ -186,6 +195,7 @@ public abstract class MapperConfig<T extends MapperConfig<T>>
     }
 
     /**
+     * TODO: 是否使用rootName包裹
      * Accessor for checking whether configuration indicates that
      * "root wrapping" (use of an extra property/name pair at root level)
      * is expected or not.

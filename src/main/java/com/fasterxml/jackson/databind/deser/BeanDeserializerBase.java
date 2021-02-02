@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.type.ClassKey;
 import com.fasterxml.jackson.databind.util.*;
 
 /**
+ * 这是关于Bean的反序列化器，也是实际应用中最为常用的一种反序列化器类型
  * Base class for <code>BeanDeserializer</code>.
  */
 public abstract class BeanDeserializerBase

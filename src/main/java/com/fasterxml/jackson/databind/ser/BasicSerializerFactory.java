@@ -67,6 +67,7 @@ public abstract class BasicSerializerFactory
         
         /* String and string-like types (note: date types explicitly
          * not included -- can use either textual or numeric serialization)
+         * TODO: 指定序列化器 String类型，均采用StringSerializer / TOStringSerializer
          */
         concrete.put(String.class.getName(), new StringSerializer());
         final ToStringSerializer sls = ToStringSerializer.instance;
@@ -75,21 +76,26 @@ public abstract class BasicSerializerFactory
         concrete.put(Character.class.getName(), sls);
         concrete.put(Character.TYPE.getName(), sls);
 
+        // TODO: 数字类型的序列化
         // Primitives/wrappers for primitives (primitives needed for Beans)
         NumberSerializers.addAll(concrete);
+        // TODO: boolean类型序列化
         concrete.put(Boolean.TYPE.getName(), new BooleanSerializer(true));
         concrete.put(Boolean.class.getName(), new BooleanSerializer(false));
 
+        // TODO: BigInteger BigDecimal的序列化
         // Other numbers, more complicated
         concrete.put(BigInteger.class.getName(), new NumberSerializer(BigInteger.class));
         concrete.put(BigDecimal.class.getName(),new NumberSerializer(BigDecimal.class));
 
         // Other discrete non-container types:
         // First, Date/Time zoo:
+        // TODO: 老的时间日期均使用DateSerializer来处理
         concrete.put(Calendar.class.getName(), CalendarSerializer.instance);
         concrete.put(java.util.Date.class.getName(), DateSerializer.instance);
 
         // And then other standard non-structured JDK types
+        // TODO: jdk里头的几种类型
         for (Map.Entry<Class<?>,Object> en : StdJdkSerializers.all()) {
             Object value = en.getValue();
             if (value instanceof JsonSerializer<?>) {

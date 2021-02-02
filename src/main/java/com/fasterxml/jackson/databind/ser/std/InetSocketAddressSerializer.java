@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 /**
+ * TODO: 处理InetSocketAddress/InetAddress类型
  * Simple serializer for {@link InetSocketAddress}.
  */
 @SuppressWarnings("serial")

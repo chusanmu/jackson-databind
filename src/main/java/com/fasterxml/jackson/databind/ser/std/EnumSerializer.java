@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.util.EnumValues;
 
 /**
+ * TODO: 枚举类型的序列化器，默认使用的是name()
  * Standard serializer used for {@link java.lang.Enum} types.
  *<p>
  * Based on {@link StdScalarSerializer} since the JSON value is

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.util.ClassUtil;
 import com.fasterxml.jackson.databind.util.Converter;
 
 /**
+ * TODO: 标准序列化器，可以认为所有的序列化子类均是它的子类
  * Base class used by all standard serializers, and can also
  * be used for custom serializers (in fact, this is the recommended
  * base class to use).
@@ -36,6 +37,7 @@ public abstract class StdSerializer<T>
     private static final long serialVersionUID = 1L;
 
     /**
+     * TODO: 用于存储锁对象以防止无限递归的秘钥构造转换序列化器
      * Key used for storing a lock object to prevent infinite recursion when
      * constructing converting serializers.
      *
@@ -44,6 +46,7 @@ public abstract class StdSerializer<T>
     private final static Object KEY_CONTENT_CONVERTER_LOCK = new Object();
     
     /**
+     * 支持的标准类型，通常声明的类型使用序列化程的属性
      * Nominal type supported, usually declared type of
      * property for which serializer is used.
      */
@@ -55,6 +58,10 @@ public abstract class StdSerializer<T>
     /**********************************************************
      */
 
+    /**
+     * 主要给_handledType赋值
+     * @param t
+     */
     protected StdSerializer(Class<T> t) {
         _handledType = t;
     }
@@ -96,6 +103,13 @@ public abstract class StdSerializer<T>
     /**********************************************************
      */
 
+    /**
+     * 父类的抽象方法，本类中也没有实现
+     * @param value Value to serialize; can <b>not</b> be null.
+     * @param gen Generator used to output resulting Json content
+     * @param provider
+     * @throws IOException
+     */
     @Override
     public abstract void serialize(T value, JsonGenerator gen, SerializerProvider provider)
         throws IOException;
@@ -107,6 +121,7 @@ public abstract class StdSerializer<T>
      */
 
     /**
+     * 接受所有的JavaType类型
      * Default implementation specifies no format. This behavior is usually
      * overriden by custom serializers.
      */
@@ -165,6 +180,7 @@ public abstract class StdSerializer<T>
     }
 
     /**
+     * TODO: 方法调用必要的访问方法以指示底层JSON类型是Json字符串
      * Helper method that calls necessary visit method(s) to indicate that the
      * underlying JSON type is JSON String.
      *
@@ -345,6 +361,8 @@ public abstract class StdSerializer<T>
      */
 
     /**
+     * TODO: 工具方法，可用于查看指定属性是否具有注解指示要对包含的值
+     * 使用转换器结构化类别，数组 List Map
      * Helper method that can be used to see if specified property has annotation
      * indicating that a converter is to be used for contained values (contents
      * of structured types; array/List/Map values)
@@ -411,6 +429,7 @@ public abstract class StdSerializer<T>
     }
 
     /**
+     * TODO: 根据指定的filterId匹配到一个PropertyFilter
      * Helper method used to locate filter that is needed, based on filter id
      * this serializer was constructed with.
      * 

@@ -291,6 +291,7 @@ filter.getClass().getName(), t.getClass().getName(), ClassUtil.exceptionMessage(
      */
     
     /**
+     * TODO: 序列化给定的值
      * The method to be called by {@link ObjectMapper} and {@link ObjectWriter}
      * for serializing given value, using serializers that
      * this provider has access to (via caching and/or creating new serializers
@@ -299,13 +300,17 @@ filter.getClass().getName(), t.getClass().getName(), ClassUtil.exceptionMessage(
     public void serializeValue(JsonGenerator gen, Object value) throws IOException
     {
         _generator = gen;
+        // TODO: 如果是null, 就使用默认的null序列化器，也就是NullSerializer，他是个JsonSerializer, 没特殊需要的话，不需要定义null的序列化器
         if (value == null) {
             _serializeNull(gen);
             return;
         }
+        // TODO: 拿到对象类型，可能是Map, List,也可能是Pojo class
         final Class<?> cls = value.getClass();
         // true, since we do want to cache root-level typed serializers (ditto for null property)
+        // TODO: 找到匹配的序列化器，这个方法很重要，比如这里找到的序列化器是BeanSerializer
         final JsonSerializer<Object> ser = findTypedValueSerializer(cls, true, null);
+        // TODO: 关于是否包裹上rootName的解析，不太重要, 最终执行的方法是_serialize()序列化方法
         PropertyName rootName = _config.getFullRootName();
         if (rootName == null) { // not explicitly specified
             if (_config.isEnabled(SerializationFeature.WRAP_ROOT_VALUE)) {
@@ -316,6 +321,7 @@ filter.getClass().getName(), t.getClass().getName(), ClassUtil.exceptionMessage(
             _serialize(gen, value, ser, rootName);
             return;
         }
+        // TODO: 99%的情况执行这里
         _serialize(gen, value, ser);
     }
 

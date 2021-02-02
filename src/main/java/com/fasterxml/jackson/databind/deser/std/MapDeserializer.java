@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import com.fasterxml.jackson.databind.util.ArrayBuilders;
 
 /**
+ * 反序列化到Map<Object,Object类型
  * Basic serializer that can take JSON "Object" structure and
  * construct a {@link java.util.Map} instance, with typed contents.
  *<p>

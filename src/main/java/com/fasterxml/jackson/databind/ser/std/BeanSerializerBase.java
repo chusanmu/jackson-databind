@@ -28,6 +28,12 @@ import com.fasterxml.jackson.databind.util.Converter;
 import com.fasterxml.jackson.databind.util.NameTransformer;
 
 /**
+ * TODO: 标准bean序列化的基类
+ *  1. 访问权限
+ *  2. 类型
+ *  3. 是否忽略
+ *  4. 是否执行特定的序列化器
+ *  5. 考虑引用
  * Base class both for the standard bean serializer, and couple
  * of variants that only differ in small details.
  * Can be used for custom bean serializers as well, although that

@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrappe
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
+/**
+ * 遇上不能识别的类型时的序列化器，默认是抛出异常
+ */
 @SuppressWarnings("serial")
 public class UnknownSerializer
     extends StdSerializer<Object>

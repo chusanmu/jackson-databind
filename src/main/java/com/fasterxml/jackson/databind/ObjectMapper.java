@@ -632,12 +632,14 @@ public class ObjectMapper
         if (needOrder ^ _serializationConfig.isEnabled(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY)) {
             configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, needOrder);
         }
-        
+        // TODO: 添加反序列化器
         _serializerProvider = (sp == null) ? new DefaultSerializerProvider.Impl() : sp;
         _deserializationContext = (dc == null) ?
                 new DefaultDeserializationContext.Impl(BeanDeserializerFactory.instance) : dc;
 
         // Default serializer factory is stateless, can just assign
+        // TODO: 在初始化的时候，把常见类型的序列化器都注册上去了，但是很显然是包括不了所有的，如果找不到对应的类型
+        // TODO: 则会在运行时动态生成的方式交给SerializerProvider去完成创建
         _serializerFactory = BeanSerializerFactory.instance;
     }
 
@@ -771,6 +773,7 @@ public class ObjectMapper
      */
 
     /**
+     * TODO: 供以方便的注册一个 多个 模块，所有的模块注册，最终都得走这个方法
      * Method for registering a module that can extend functionality
      * provided by this mapper; for example, by adding providers for
      * custom serializers and deserializers.
@@ -791,13 +794,14 @@ public class ObjectMapper
         if (version == null) {
             throw new IllegalArgumentException("Module without defined version");
         }
-
+        // TODO: 一个bug修复，当本模块需要依赖别的模块的时候，默认会把你的依赖模块给注册了
         // [databind#2432]: Modules may depend on other modules; if so, register those first
         for (Module dep : module.getDependencies()) {
             registerModule(dep);
         }
 
         // then module itself
+        // TODO: 此特征默认是开启的，忽略统一模块注册多次的情况
         if (isEnabled(MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS)) {
             Object typeId = module.getTypeId();
             if (typeId != null) {
@@ -807,6 +811,7 @@ public class ObjectMapper
                     _registeredModuleTypes = new LinkedHashSet<Object>();
                 }
                 // try adding; if already had it, should skip
+                // TODO: 如果这个模块id已经存在了，那就直接return返回
                 if (!_registeredModuleTypes.add(typeId)) {
                     return this;
                 }
@@ -814,6 +819,7 @@ public class ObjectMapper
         }
 
         // And then call registration
+        // TODO: 执行真正的注册逻辑
         module.setupModule(new Module.SetupContext()
         {
             // // // Accessors
@@ -1022,6 +1028,7 @@ public class ObjectMapper
     }
 
     /**
+     *  返回ID的只读视图
      * The set of {@link Module} typeIds that are registered in this
      * ObjectMapper. By default the typeId for a module is it's full
      * class name (see {@link Module#getTypeId()}).
@@ -1048,6 +1055,7 @@ public class ObjectMapper
     }
 
     /**
+     * TODO: 使用JDK的ServiceLoader机制去找到模块Module实例
      * Method for locating available methods, using JDK {@link ServiceLoader}
      * facility, along with module-provided SPI.
      *<p>
@@ -1082,6 +1090,7 @@ public class ObjectMapper
     }
 
     /**
+     * TODO: 完成查找 + 注册，查找并且注册，依赖于上面的静态方法和registerModule方法
      * Convenience method that is functionally equivalent to:
      *<code>
      *   mapper.registerModules(mapper.findModules());
@@ -3059,6 +3068,8 @@ public class ObjectMapper
     /**********************************************************
      */
 
+    /* ---------------- 一系列读方法 -------------- */
+
     /**
      * Method to deserialize JSON content from given file into given Java type.
      * 
@@ -3396,6 +3407,7 @@ public class ObjectMapper
     }
 
     /**
+     * TODO：将Object 可能是数组，List Map对象等 输出为一个字符串
      * Method that can be used to serialize any Java value as
      * a String. Functionally equivalent to calling
      * {@link #writeValue(Writer,Object)} with {@link java.io.StringWriter}
@@ -3408,14 +3420,17 @@ public class ObjectMapper
         throws JsonProcessingException
     {
         // alas, we have to pull the recycler directly here...
+        // TODO: 它就是个java.io.Write,负责输出流的写出
         SegmentedStringWriter sw = new SegmentedStringWriter(_jsonFactory._getBufferRecycler());
         try {
+            // TODO: 配置生成器
             _configAndWriteValue(_jsonFactory.createGenerator(sw), value);
         } catch (JsonProcessingException e) {
             throw e;
         } catch (IOException e) { // shouldn't really happen, but is declared as possibility so:
             throw JsonMappingException.fromUnexpectedIOE(e);
         }
+        // TODO: 从writer里把字符串拿出来
         return sw.getAndClear();
     }
 
@@ -4094,12 +4109,15 @@ public class ObjectMapper
     }
 
     /**
+     * 1. 配置生成器JsonGenerator
+     * 2. 执行写
      * Method called to configure the generator as necessary and then
      * call write functionality
      */
     protected final void _configAndWriteValue(JsonGenerator g, Object value)
         throws IOException
     {
+        // TODO: 拿到序列化的配置类，用来交给DefaultSerializerProvider 再用来配置生成器
         SerializationConfig cfg = getSerializationConfig();
         cfg.initialize(g); // since 2.5
         if (cfg.isEnabled(SerializationFeature.CLOSE_CLOSEABLE) && (value instanceof Closeable)) {
@@ -4107,6 +4125,7 @@ public class ObjectMapper
             return;
         }
         try {
+            // TODO: 1. 根据SerializationConfig得到一个DefaultSerializerProvider 2.在使用serializationConfig执行序列化动作
             _serializerProvider(cfg).serializeValue(g, value);
         } catch (Exception e) {
             ClassUtil.closeOnFailAndThrowAsIOE(g, e);
@@ -4197,21 +4216,36 @@ public class ObjectMapper
         return result;
     }
 
+    /**
+     * TODO: read 基本上都调用了此方法，方法名是读取map并关闭
+     *  1. 初始化JsonToken, 然后根据JsonToken的类型确定如何解析
+     *  2. 可能值为null, ]/} -》直接返回null，调取反序列化器处理(数组集合或者对象)
+     *  3. 根据valueType类型，在反序列化上下文匹配到一个合适的反序列化器
+     *  4. 交给反序列化器完成反序列化操作
+     * @param p0
+     * @param valueType
+     * @return
+     * @throws IOException
+     */
     protected Object _readMapAndClose(JsonParser p0, JavaType valueType)
         throws IOException
-    {
+    {   // TODO: p0用于反序列化的解析器
         try (JsonParser p = p0) {
             Object result;
             JsonToken t = _initForReading(p, valueType);
             final DeserializationConfig cfg = getDeserializationConfig();
             final DeserializationContext ctxt = createDeserializationContext(p, cfg);
+            // TODO: null值
             if (t == JsonToken.VALUE_NULL) {
                 // Ask JsonDeserializer what 'null value' to use:
                 result = _findRootDeserializer(ctxt, valueType).getNullValue(ctxt);
+                // TODO: 若是 ]/} 直接返回null
             } else if (t == JsonToken.END_ARRAY || t == JsonToken.END_OBJECT) {
                 result = null;
             } else {
+                // TODO: 正常情况，根据valueType找到一个合适的反序列化器
                 JsonDeserializer<Object> deser = _findRootDeserializer(ctxt, valueType);
+                // TODO: 然后将反序列化操作 交给反序列化器即可
                 if (cfg.useRootWrapping()) {
                     result = _unwrapAndDeserialize(p, ctxt, cfg, valueType, deser);
                 } else {
@@ -4390,6 +4424,7 @@ public class ObjectMapper
      */
 
     /**
+     * 根据类型找到一个合适的反序列化器
      * Method called to locate deserializer for the passed root-level value.
      */
     protected JsonDeserializer<Object> _findRootDeserializer(DeserializationContext ctxt,
@@ -4397,11 +4432,13 @@ public class ObjectMapper
         throws JsonMappingException
     {
         // First: have we already seen it?
+        // TODO: 先查缓存，ObjectMapper里的一个concurrentHashMap
         JsonDeserializer<Object> deser = _rootDeserializers.get(valueType);
         if (deser != null) {
             return deser;
         }
         // Nope: need to ask provider to resolve it
+        // TODO: ObjectMapper的缓存里没有，比如首次访问的时候，就去上下文里找，找不到则抛出错误，找到后缓存起来
         deser = ctxt.findRootValueDeserializer(valueType);
         if (deser == null) { // can this happen?
             return ctxt.reportBadDefinition(valueType,

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat;
 import com.fasterxml.jackson.databind.util.TokenBuffer;
 
 /**
+ * TODO: 处理UUID
  * Specialized {@link JsonSerializer} to output {@link java.util.UUID}s.
  * Beyond optimized access and writing of textual representation (which
  * is the default handling in most cases), it will alternatively

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrappe
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 
 /**
+ * TODO: 序列化时执行ToString()方法序列化器的基类，比如StringBuffer, Character
  * Intermediate base class that serves as base for standard {@link ToStringSerializer}
  * as well as for custom subtypes that want to add processing for converting from
  * value to output into its {@code String} representation (whereas standard version

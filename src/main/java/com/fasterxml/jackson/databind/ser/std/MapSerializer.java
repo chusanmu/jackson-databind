@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.fasterxml.jackson.databind.util.ClassUtil;
 
 /**
+ * TODO：用于序列化 Map<?,?> 类型
  * Standard serializer implementation for serializing {link java.util.Map} types.
  *<p>
  * Note: about the only configurable setting currently is ability to filter out

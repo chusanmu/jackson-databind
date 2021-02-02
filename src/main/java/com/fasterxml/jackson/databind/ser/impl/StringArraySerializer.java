@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ser.std.ArraySerializerBase;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 /**
+ * 用于序列化String[]类型
  * Standard serializer used for <code>String[]</code> values.
  */
 @JacksonStdImpl

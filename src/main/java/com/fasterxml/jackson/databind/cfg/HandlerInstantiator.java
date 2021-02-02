@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ser.VirtualBeanPropertyWriter;
 import com.fasterxml.jackson.databind.util.Converter;
 
 /**
+ * TODO: 处理器，组件创建器，是流出的一个钩子，提供了多个方法用于产生具体实例，可以返回null
  * Helper class used for handling details of creating handler instances (things
  * like {@link JsonSerializer}s, {@link JsonDeserializer}s, various type
  * handlers) of specific types. Actual handler type has been resolved at this
@@ -36,6 +37,7 @@ public abstract class HandlerInstantiator
      */
 
     /**
+     * TODO: 获取指定类型的反序列化器的实例
      * Method called to get an instance of deserializer of specified type.
      * 
      * @param config Deserialization configuration in effect
@@ -78,6 +80,7 @@ public abstract class HandlerInstantiator
             Annotated annotated, Class<?> serClass);
 
     /**
+     * TODO: 获取指定类型的TypeResolverBuilder实例
      * Method called to get an instance of TypeResolverBuilder of specified type.
      * 
      * @param config Mapper configuration in effect (either SerializationConfig or
@@ -131,6 +134,7 @@ public abstract class HandlerInstantiator
     }
 
     /**
+     * 获取属性命名策略实例
      * Method called to construct a NamingStrategy instance used for specified
      * class.
      * 
@@ -142,6 +146,7 @@ public abstract class HandlerInstantiator
     }
 
     /**
+     * 获取指定类型的转换器
      * Method called to construct a Converter instance used for specified class.
      * 
      * @since 2.2

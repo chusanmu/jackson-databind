@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.util.AccessPattern;
 import com.fasterxml.jackson.databind.util.ClassUtil;
 
 /**
+ * TODO: 反序列化EnumSet<?>类型
  * Standard deserializer for {@link EnumSet}s.
  * <p>
  * Note: casting within this class is all messed up -- just could not figure out a way

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ser.std.BeanSerializerBase;
 import com.fasterxml.jackson.databind.util.NameTransformer;
 
 /**
+ * TODO: 序列化器，他可以序列化映射的Java对象Json对象输出，内部处理主要是由一个BeanPropertyWrite序列来处理访问值序列化并调用适当的序列化器写出Json
  * Serializer class that can serialize Java objects that map
  * to JSON Object output. Internally handling is mostly dealt with
  * by a sequence of {@link BeanPropertyWriter}s that will handle

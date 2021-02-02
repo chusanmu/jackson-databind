@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.util.AccessPattern;
 import com.fasterxml.jackson.databind.util.ObjectBuffer;
 
 /**
+ * TODO: 反序列化到String[] 类型
  * Separate implementation for serializing String arrays (instead of
  * using {@link ObjectArrayDeserializer}.
  * Used if (and only if) no custom value deserializers are used.

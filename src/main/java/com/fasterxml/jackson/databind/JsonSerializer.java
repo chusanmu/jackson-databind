@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.util.ClassUtil;
 import com.fasterxml.jackson.databind.util.NameTransformer;
 
 /**
+ * TODO: JsonSerializer 是Jackson定义序列化器的顶层接口，其实是个抽象类，它定义了一些抽象Api来实现将任意类型转换为JSON, 供以ObjectMapper来使用
+ *    SerializerProvider: 序列化器提供者，
  * Abstract class that defines API used by {@link ObjectMapper} (and
  * other chained {@link JsonSerializer}s too) to serialize Objects of
  * arbitrary types into JSON, using provided {@link JsonGenerator}.
@@ -111,6 +113,7 @@ public abstract class JsonSerializer<T>
      */
 
     /**
+     * TODO: 唯一抽象方法，执行序列化 --- 最重要的一个方法， T value待序列化的值，不能为Null, JsonGenerator 生成器，SerializerProvider serializers: 可用于获取序列化器提供程序
      * Method that can be called to ask implementation to serialize
      * values of type this serializer handles.
      *
@@ -123,6 +126,7 @@ public abstract class JsonSerializer<T>
         throws IOException;
 
     /**
+     * TODO: 可以调用该方法来要求实现序列化，使用指定的类型序列化器处理值
      * Method that can be called to ask implementation to serialize
      * values of type this serializer handles, using specified type serializer
      * for embedding necessary type information.
@@ -182,6 +186,7 @@ public abstract class JsonSerializer<T>
     public Class<T> handledType() { return null; }
 
     /**
+     * TODO: 检查给定的可序列化值是否可以为空值
      * Method called to check whether given serializable value is
      * considered "empty" value (for purposes of suppressing serialization
      * of empty values).
@@ -283,6 +288,8 @@ public abstract class JsonSerializer<T>
      */
 
     /**
+     * TODO: 它是一个静态的标记类，它必须和@JsonSerialize注解一起使用，表示没有配置序列化器
+     * @JsonSerialize(using=JsonSerializer.None.class)
      * This marker class is only to be used with annotations, to
      * indicate that <b>no serializer is configured</b>.
      *<p>
